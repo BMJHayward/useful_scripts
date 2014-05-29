@@ -1,0 +1,2 @@
+mkdir -p main/{lib/ext,bin,src,doc/{html,info,pdf},demo/stat/a} && \
+touch main/doc/README, main/doc/LICENSE, main/makefile.c
