@@ -1,10 +1,16 @@
 import datetime
 import os
 import shutil
+import gzip
 
 GOOGLE_DRIVE_DIRECTORY = 'C:/Users/username/Google Drive/'
 MAIN_BACKUP_DIRECTORY = 'C:/Users/username/Desktop/_Backups/md_backup_{0}'
 EXTERNAL_DRIVE_DIRECTORY = 'F:/My Files/_Backups/md_backup_{0}'
+
+def compress(target):
+    with open(target, 'rb') as in_file:
+        with open(target + '.gz', 'wb') as out_file:
+            out_file.writelines(in_file)
 
 def get_backup_directory(base_directory):
     date = str(datetime.datetime.now())[:16]
