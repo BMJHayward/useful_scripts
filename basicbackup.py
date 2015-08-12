@@ -9,7 +9,7 @@ EXTERNAL_DRIVE_DIRECTORY = 'F:/My Files/_Backups/md_backup_{0}'
 
 def compress(target):
     with open(target, 'rb') as in_file:
-        with open(target + '.gz', 'wb') as out_file:
+        with gzip.open(target + '.gz', 'wb') as out_file:
             out_file.writelines(in_file)
 
 def get_backup_directory(base_directory):
