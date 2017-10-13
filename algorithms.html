@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+    <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+    <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+    <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+    <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<body>
+<div><p>Test data is:</p></div>
+<div id="testdata_0">
+</div>
+<div><p>Test data is now:</p></div>
+<div id="testdata_1">
+</div>
+<script>
+function mergesort(arr)
+{
+    if (arr.length < 2)
+        return arr;
+ 
+    var middle = parseInt(arr.length / 2);
+    var left   = arr.slice(0, middle);
+    var right  = arr.slice(middle, arr.length);
+ 
+    return merge(mergesort(left), mergesort(right));
+}
+ 
+function merge(left, right)
+{
+    var result = [];
+ 
+    while (left.length && right.length) {
+        if (left[0] <= right[0]) {
+            result.push(left.shift());
+        } else {
+            result.push(right.shift());
+        }
+    }
+ 
+    while (left.length)
+        result.push(left.shift());
+ 
+    while (right.length)
+        result.push(right.shift());
+ 
+    return result;
+}
+var testdata = [];
+for (var l=0; l<10; l++){
+    testdata.push(Math.floor(Math.random()*10));
+};
+console.log('testdata is: ', testdata);
+document.getElementById("testdata_0").innerHTML = "<p>" + testdata.toSource() + "</p>";
+console.log('testdata is now: ', mergesort(testdata));
+document.getElementById("testdata_1").innerHTML = "<p>" + mergesort(testdata).toSource() + "</p>";
+</script>
+</body>
