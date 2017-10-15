@@ -22,7 +22,7 @@ def insertion_sort_decr(array):
             i -= 1
         array[i+1] = key
 
-def mergeSort(alist):
+def mergesort(alist):
     print("Splitting ",alist)
     if len(alist)>1:
         mid = len(alist)//2
@@ -55,7 +55,7 @@ def mergeSort(alist):
             k=k+1
     print("Merging ",alist)
 
-def quicksort(array):
+def qsort_simple(array):
     less = []
     equal = []
     greater = []
@@ -71,3 +71,20 @@ def quicksort(array):
         return quicksort(less) + equal + quicksort(greater)
     else:
         return array
+
+def qsort_inplace(array, low, high):
+    if low < high:
+        partition = qsort_partition(array, low, high)
+        qsort_inplace(array, low, partition-1)
+        qsort_inplace(array, partition+1, high)
+
+def qsort_partition(array, low, high):
+    pivot = array[high]
+    begin = low - 1
+    for end in range(low, high):
+        if array[end] < pivot:
+            begin += 1
+            array[begin], array[end] = array[end], array[begin]
+    if array[high] < array[begin + 1]:
+        array[begin + 1], array[high] = array[high], array[begin + 1]
+    return begin + 1
