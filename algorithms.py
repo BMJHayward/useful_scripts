@@ -88,3 +88,54 @@ def qsort_partition(array, low, high):
     if array[high] < array[begin + 1]:
         array[begin + 1], array[high] = array[high], array[begin + 1]
     return begin + 1
+
+def longest_common_subsequence(X,Y):
+    m, n = len(X), len(Y)
+    b = [[i for i in range(1,m)],[j for j in range(1,n)]]
+    c = [[i for i in range(m)],[j for j in range(n)]] 
+    for i in range(1,m): 
+        c[i,0] = 0
+    for j in range(n):
+        c[0,j] = 0
+    for i in range(1,m):
+        for j in range(1,n):
+            if X[i] == Y[j]:
+                c[i,j] = c[i-1,j-1] + 1
+                b[i,j] = 'up left'
+            elif c[i-1,j] >= c[i,j-1]:
+                c[i,j] = c[i-1,j]
+                b[i,j] = 'up'
+            else:
+                c[i,j] = c[i,j-1]
+                b[i,j] = 'left'
+    return c, b
+
+def print_LCS(b,X,i,j):
+    if i==0 | j==0:
+        return
+    if b[i,j] == 'up left':
+        print_LCS(b,X,i-1,j-1)
+        print(X[i])
+    elif b[i,j] == 'up':
+        print_LCS(b,X,i-1,j)
+    else:
+        print_LCS(b,X,i,j-1)
+
+def optimal_BST(p,q,n):
+    e = [[i for i in range(1,n+1)],[j for j in range(n)]]
+    w = [[i for i in range(1,n+1)],[j for j in range(n)]]
+    root = [[i for i in range(1,n)],[j for j in range(1,n)]]
+    for i in range(1,n+1):
+        e[i,i-1] = q[i-1]
+        w[i,i-1] = q[i-1]
+    for l in range(1,n):
+        for i in range(1,n-l+1):
+            j = i+l-1
+            e[i,j] = math.inf
+            w[i,j] = w[i,j-1] + p[j] + q[j]
+            for r in range(i,j):
+                t = e[i,r-1] + e[r+1,j] + w[i,j]
+                if t < e[i,j]:
+                    e[i,j] = t
+                    root[i,j] = r
+    return e, root
