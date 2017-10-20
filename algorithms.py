@@ -92,8 +92,8 @@ def qsort_partition(array, low, high):
 
 def longest_common_subsequence(X,Y):
     m, n = len(X), len(Y)
-    b = [[i for i in range(1,m)],[j for j in range(1,n)]]
-    c = [[i for i in range(m)],[j for j in range(n)]] 
+    b = [[i for i in range(m)] for j in range(n)]
+    c = [[i for i in range(m)] for j in range(n)]
     for i in range(1,m): 
         c[i][0] = 0
     for j in range(n):
@@ -104,7 +104,7 @@ def longest_common_subsequence(X,Y):
                 c[i][j] = c[i-1][j-1] + 1
                 b[i][j] = 'up left'
             elif c[i-1][j] >= c[i][j-1]:
-                c[i][j] = c[i-1,j]
+                c[i][j] = c[i-1][j]
                 b[i][j] = 'up'
             else:
                 c[i][j] = c[i][j-1]
@@ -112,7 +112,7 @@ def longest_common_subsequence(X,Y):
     return c, b
 
 def print_LCS(b,X,i,j):
-    if i==0 | j==0:
+    if i==0 or j==0:
         return
     if b[i][j] == 'up left':
         print_LCS(b,X,i-1,j-1)
@@ -127,7 +127,7 @@ def run_LCS():
     X = [dna[np.random.randint(4)] for i in range(20)]
     Y = [dna[np.random.randint(4)] for i in range(20)]
     commons, path = longest_common_subsequence(X,Y)
-    print_LCS(path,X,len(X),len(commons))
+    print_LCS(path,X,len(X)-1,len(Y)-1)
 
 def optimal_BST(p,q,n):
     e = [[i for i in range(1,n+1)],[j for j in range(n)]]
