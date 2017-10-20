@@ -133,6 +133,11 @@ def run_LCS():
     lcs = print_LCS(path,X,len(X)-1,len(Y)-1,lcs)
 
 def optimal_BST(p,q,n):
+    """
+    >>> ex, rootoo = optimal_BST(list(range(10)),list(range(10)),10)
+    >>> print(np.array(ex))
+    >>> print(np.array(rootoo))
+    """
     e = [[i for i in range(1,n+1)] for j in range(n)]
     w = [[i for i in range(1,n+1)] for j in range(n)]
     root = [[i for i in range(1,n)] for j in range(1,n)]
