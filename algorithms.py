@@ -111,23 +111,26 @@ def longest_common_subsequence(X,Y):
                 b[i][j] = 'left'
     return c, b
 
-def print_LCS(b,X,i,j):
+def print_LCS(b,X,i,j,lcs):
     if i==0 or j==0:
         return
     if b[i][j] == 'up left':
-        print_LCS(b,X,i-1,j-1)
+        print_LCS(b,X,i-1,j-1,lcs)
         print(X[i])
+        lcs.append(X[i])
     elif b[i][j] == 'up':
-        print_LCS(b,X,i-1,j)
+        print_LCS(b,X,i-1,j,lcs)
     else:
-        print_LCS(b,X,i,j-1)
+        print_LCS(b,X,i,j-1,lcs)
+    return lcs
 
 def run_LCS():
     dna = {0:'a', 1:'c', 2:'g', 3:'t'}
     X = [dna[np.random.randint(4)] for i in range(20)]
     Y = [dna[np.random.randint(4)] for i in range(20)]
     commons, path = longest_common_subsequence(X,Y)
-    print_LCS(path,X,len(X)-1,len(Y)-1)
+    lcs = []
+    lcs = print_LCS(path,X,len(X)-1,len(Y)-1,lcs)
 
 def optimal_BST(p,q,n):
     e = [[i for i in range(1,n+1)],[j for j in range(n)]]
