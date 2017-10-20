@@ -133,10 +133,10 @@ def run_LCS():
     lcs = print_LCS(path,X,len(X)-1,len(Y)-1,lcs)
 
 def optimal_BST(p,q,n):
-    e = [[i for i in range(1,n+1)],[j for j in range(n)]]
-    w = [[i for i in range(1,n+1)],[j for j in range(n)]]
-    root = [[i for i in range(1,n)],[j for j in range(1,n)]]
-    for i in range(1,n+1):
+    e = [[i for i in range(1,n+1)] for j in range(n)]
+    w = [[i for i in range(1,n+1)] for j in range(n)]
+    root = [[i for i in range(1,n)] for j in range(1,n)]
+    for i in range(1,n):
         e[i][i-1] = q[i-1]
         w[i][i-1] = q[i-1]
     for l in range(1,n):
