@@ -92,36 +92,36 @@ def qsort_partition(array, low, high):
 
 def longest_common_subsequence(X,Y):
     m, n = len(X), len(Y)
-    b = [[i for i in range(m)] for j in range(n)]
-    c = [[i for i in range(m)] for j in range(n)]
+    paths = [[i for i in range(m)] for j in range(n)]
+    commons = [[i for i in range(m)] for j in range(n)]
     for i in range(1,m): 
-        c[i][0] = 0
+        commons[i][0] = 0
     for j in range(n):
-        c[0][j] = 0
+        commons[0][j] = 0
     for i in range(1,m):
         for j in range(1,n):
             if X[i] == Y[j]:
-                c[i][j] = c[i-1][j-1] + 1
-                b[i][j] = 'up left'
-            elif c[i-1][j] >= c[i][j-1]:
-                c[i][j] = c[i-1][j]
-                b[i][j] = 'up'
+                commons[i][j] = commons[i-1][j-1] + 1
+                paths[i][j] = 'up left'
+            elif commons[i-1][j] >= commons[i][j-1]:
+                commons[i][j] = commons[i-1][j]
+                paths[i][j] = 'up'
             else:
-                c[i][j] = c[i][j-1]
-                b[i][j] = 'left'
-    return c, b
+                commons[i][j] = commons[i][j-1]
+                paths[i][j] = 'left'
+    return commons, paths
 
-def print_LCS(b,X,i,j,lcs):
+def print_LCS(paths,X,i,j,lcs):
     if i==0 or j==0:
         return
-    if b[i][j] == 'up left':
-        print_LCS(b,X,i-1,j-1,lcs)
+    if paths[i][j] == 'up left':
+        print_LCS(paths,X,i-1,j-1,lcs)
         print(X[i])
         lcs.append(X[i])
-    elif b[i][j] == 'up':
-        print_LCS(b,X,i-1,j,lcs)
+    elif paths[i][j] == 'up':
+        print_LCS(paths,X,i-1,j,lcs)
     else:
-        print_LCS(b,X,i,j-1,lcs)
+        print_LCS(paths,X,i,j-1,lcs)
     return lcs
 
 def run_LCS():
@@ -134,7 +134,9 @@ def run_LCS():
 
 def optimal_BST(p,q,n):
     """
-    >>> ex, rootoo = optimal_BST(list(range(10)),list(range(10)),10)
+    >>> ex = [np.random.randint(100) for i in range(10)]
+    >>> rootoo = [np.random.randint(100) for i in range(10)]
+    >>> ex, rootoo = optimal_BST(ex, rootoo, 10)
     >>> print(np.array(ex))
     >>> print(np.array(rootoo))
     """
@@ -152,6 +154,7 @@ def optimal_BST(p,q,n):
             for r in range(i,j):
                 t = e[i][r-1] + e[r+1][j] + w[i][j]
                 if t < e[i][j]:
-                    e[i][j] = t
+                       e[i][j] = t
                     root[i][j] = r
+  
     return e, root
