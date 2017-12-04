@@ -154,7 +154,33 @@ def optimal_BST(p,q,n):
             for r in range(i,j):
                 t = e[i][r-1] + e[r+1][j] + w[i][j]
                 if t < e[i][j]:
-                       e[i][j] = t
+                    e[i][j] = t
                     root[i][j] = r
-  
     return e, root
+
+def binary_search(searchlist, key):
+    '''
+    >>> arraytosearch = [12,66,1,7,8,9,3,48,26]
+    >>> sorted(arraytosearch)
+    >>> binary_search(arraytosearch, 12)
+    5
+    '''
+    def inner_search(subarray, key, start, end):
+        if start == end:
+            return -1
+        length = end - 1
+        if length == 1:
+            if subarray[start] == key:
+                return start
+            else:
+                return -1
+        mid = start + length//2
+        if key == subarray[mid]:
+            return key
+        elif key < subarray[mid]:
+            return inner_search(subarray, key, start, mid)
+        elif key > subarray[mid]:
+            return inner_search(subarray, key, mid+1, end) 
+        else: 
+            raise ValueError('{} not in list'.format(key))
+    return inner_search(searchlist, key, 0, len(searchlist))
