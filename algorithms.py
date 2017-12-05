@@ -167,20 +167,20 @@ def binary_search(searchlist, key):
     '''
     def inner_search(subarray, key, start, end):
         if start == end:
-            return - 1
-        length = end - 1
+            return ValueError('{} not in list'.format(key))
+        length = end - start
         if length == 1:
             if subarray[start] == key:
                 return start
             else:
-                return - 1
+                return ValueError('{} not in list'.format(key))
         mid = start + length // 2
         if key == subarray[mid]:
             return mid
-        elif key < subarray[mid]:
-            return inner_search(subarray, key, start, mid)
         elif key > subarray[mid]:
             return inner_search(subarray, key, mid+1, end) 
+        elif key < subarray[mid]:
+            return inner_search(subarray, key, start, mid)
         else: 
-            raise ValueError('{} not in list'.format(key))
-    return inner_search(searchlist, key, 1, len(searchlist))
+            return ValueError('{} not in list'.format(key))
+    return inner_search(searchlist, key, 0, len(searchlist))
