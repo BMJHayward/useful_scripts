@@ -1,3 +1,4 @@
+from collections import UserList
 import math
 import numpy as np
 def insertion_sort(array, incrs=True):
@@ -184,3 +185,40 @@ def binary_search(searchlist, key):
         else: 
             return ValueError('{} not in list'.format(key))
     return inner_search(searchlist, key, 0, len(searchlist))
+
+
+# array representations of a heap, with root at i=1
+def parent(i):
+    return i//2
+
+def left_node(i):
+    return 2*i-1
+
+def right_node(i):
+    return 2*i
+
+def build_max_heap(array):
+    array.heap_size = len(array)
+    for i in range(len(array)//2-1, 0, -1):
+        max_heapify(array, i)
+
+def max_heapify(array, index):
+    left = left_node(index)
+    right = right_node(index)
+    largest = None
+    if (left <= array.heap_size) and (array[left] > array[index]):
+        largest = left
+    else: largest = index
+    if (right <= array.heap_size) and (array[right] > array[index]):
+        largest = right
+    if largest != index:
+        array[index], array[largest] = array[largest], array[index] 
+        max_heapify(array, largest)
+
+def heapsort(array):
+    array = UserList(array)
+    build_max_heap(array)
+    for i in range(len(array)-1,1,-1):
+        array[1], array[i] = array[i], array[1]
+        array.heap_size -= 1
+        max_heapify(array, 1)
