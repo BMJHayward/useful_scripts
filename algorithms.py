@@ -187,38 +187,40 @@ def binary_search(searchlist, key):
     return inner_search(searchlist, key, 0, len(searchlist))
 
 
-# array representations of a heap, with root at i=1
-def parent(i):
-    return i//2
+def heapsort(a):
+    def siftdown(a, i, size):
+        l = 2*i + 1
+        r = 2*i + 2
+        largest = i
+        if l <= size-1 and a[l] > a[i]:
+            largest = l
+        if r <= size-1 and a[r] > a[largest]:
+            largest = r
+        if largest != i:
+            a[i], a[largest] = a[largest], a[i]
+            siftdown(a, largest, size)
+    def heapify(a, size):
+        p = size//2 - 1
+        while p >= 0:
+            siftdown(a, p, size)
+            p -= 1
+    size = len(a)
+    heapify(a, size)
+    end = size - 1
+    while(end > 0):
+        a[0], a[end] = a[end], a[0]
+        siftdown(a, 0, end)
+        end -= 1
+        print(a)
 
-def left_node(i):
-    return 2*i-1
+narray = [43, 86, 27, 40, 19, 20, 73, 58, 97, 21]
+print(narray)
+heapsort(narray)
+print(narray)
 
-def right_node(i):
-    return 2*i
-
-def build_max_heap(array):
-    array.heap_size = len(array)
-    for i in range(len(array)//2-1, 0, -1):
-        max_heapify(array, i)
-
-def max_heapify(array, index):
-    left = left_node(index)
-    right = right_node(index)
-    largest = None
-    if (left <= array.heap_size) and (array[left] > array[index]):
-        largest = left
-    else: largest = index
-    if (right <= array.heap_size) and (array[right] > array[index]):
-        largest = right
-    if largest != index:
-        array[index], array[largest] = array[largest], array[index] 
-        max_heapify(array, largest)
-
-def heapsort(array):
-    array = UserList(array)
-    build_max_heap(array)
-    for i in range(len(array)-1,1,-1):
-        array[1], array[i] = array[i], array[1]
-        array.heap_size -= 1
-        max_heapify(array, 1)
+def invert_btree(root):
+    root.left, root.right = root.right, root.left
+    if root.left != None:
+        invert_btree(root.left)
+    if root.right != None:
+        invert_btree(root.right)
