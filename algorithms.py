@@ -187,31 +187,31 @@ def binary_search(searchlist, key):
     return inner_search(searchlist, key, 0, len(searchlist))
 
 
-def heapsort(a):
-    def siftdown(a, i, size):
-        l = 2*i + 1
-        r = 2*i + 2
-        largest = i
-        if l <= size-1 and a[l] > a[i]:
-            largest = l
-        if r <= size-1 and a[r] > a[largest]:
-            largest = r
-        if largest != i:
-            a[i], a[largest] = a[largest], a[i]
-            siftdown(a, largest, size)
-    def heapify(a, size):
-        p = size//2 - 1
-        while p >= 0:
-            siftdown(a, p, size)
-            p -= 1
-    size = len(a)
-    heapify(a, size)
+def heapsort(array):
+    def siftdown(array, index, size):
+        left = 2*index + 1
+        right = 2*index + 2
+        largest = index
+        if left <= size-1 and array[left] > array[index]:
+            largest = left
+        if right <= size-1 and array[right] > array[largest]:
+            largest = right
+        if largest != index:
+            array[index], array[largest] = array[largest], array[index]
+            siftdown(array, largest, size)
+    def heapify(array, size):
+        start = size//2 - 1
+        while start >= 0:
+            siftdown(array, start, size)
+            start -= 1
+    size = len(array)
+    heapify(array, size)
     end = size - 1
     while(end > 0):
-        a[0], a[end] = a[end], a[0]
-        siftdown(a, 0, end)
+        array[0], array[end] = array[end], array[0]
+        siftdown(array, 0, end)
         end -= 1
-        print(a)
+        print(array)
 
 narray = [43, 86, 27, 40, 19, 20, 73, 58, 97, 21]
 print(narray)
