@@ -229,10 +229,24 @@ def invert_btree(root):
 
 ######### Huffman coding attempt 1 ######################
 from heapq import heappush, heappop, heapify
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, UserDict
 
 def huff_encode(symb2freq):
     """Huffman encode the given dict mapping symbols to weights"""
+    ''' pseudo code:
+    >>> class Node(UserDict):
+    >>>     left = None
+    >>>     right = None
+    >>> def huffman(char_set):
+    >>>     n = len(char_set)
+    >>>     q_set = list(char_set)
+    >>>     for i in range(0,n):
+    >>>         z = Node()
+    >>>         z.left = x = extract_min(q_set)
+    >>>         z.right = y = extract_min(q_set)
+    >>>         insert(q_set, z)
+    >>>     return extract_min(q_set)
+    '''
     heap = [[wt, [sym, ""]] for sym, wt in symb2freq.items()]
     heapify(heap)
     while len(heap) > 1:
