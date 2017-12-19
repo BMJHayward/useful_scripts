@@ -188,6 +188,12 @@ def binary_search(searchlist, key):
 
 
 def heapsort(array):
+    '''
+    >>> narray = [43, 86, 27, 40, 19, 20, 73, 58, 97, 21]
+    >>> print(narray)
+    >>> heapsort(narray)
+    >>> print(narray)
+    '''
     def siftdown(array, index, size):
         left = 2*index + 1
         right = 2*index + 2
@@ -213,10 +219,6 @@ def heapsort(array):
         end -= 1
         print(array)
 
-narray = [43, 86, 27, 40, 19, 20, 73, 58, 97, 21]
-print(narray)
-heapsort(narray)
-print(narray)
 
 def invert_btree(root):
     root.left, root.right = root.right, root.left
@@ -224,3 +226,35 @@ def invert_btree(root):
         invert_btree(root.left)
     if root.right != None:
         invert_btree(root.right)
+
+######### Huffman coding attempt 1 ######################
+from heapq import heappush, heappop, heapify
+from collections import Counter, defaultdict
+
+def huff_encode(symb2freq):
+    """Huffman encode the given dict mapping symbols to weights"""
+    heap = [[wt, [sym, ""]] for sym, wt in symb2freq.items()]
+    heapify(heap)
+    while len(heap) > 1:
+        lo = heappop(heap)
+        hi = heappop(heap)
+        for pair in lo[1:]:
+            pair[1] = '0' + pair[1]
+        for pair in hi[1:]:
+            pair[1] = '1' + pair[1]
+        heappush(heap, [lo[0] + hi[0]] + lo[1:] + hi[1:])
+    return sorted(heappop(heap)[1:], key=lambda p: (len(p[-1]), p))
+
+huff_text = '''I identify as a KFC bucket. My pronouns are Crispy and Original. #Respectmypronouns 
+If you need an example on how my gender studies professor identifies me, "Stop spewing your 
+ignorance at crispy, Original has feelings that need to be accounted for. Crispy is finger 
+lickin' good why can't you respect crispy?"'''
+
+# symb2freq = defaultdict(int)
+symb2freq = Counter(huff_text)
+for char in huff_text:
+    symb2freq[char] += 1
+huff = huff_encode(symb2freq)
+print("Symbol\tWeight\tHuffman Code")
+for p in huff:
+    print('{}\t{}\t{}'.format(p[0], symb2freq[p[0]], p[1]))
