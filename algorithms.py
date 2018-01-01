@@ -259,16 +259,17 @@ def huff_encode(symb2freq):
         heappush(heap, [lo[0] + hi[0]] + lo[1:] + hi[1:])
     return sorted(heappop(heap)[1:], key=lambda p: (len(p[-1]), p))
 
-huff_text = '''I identify as a KFC bucket. My pronouns are Crispy and Original. #Respectmypronouns 
-If you need an example on how my gender studies professor identifies me, "Stop spewing your 
-ignorance at crispy, Original has feelings that need to be accounted for. Crispy is finger 
-lickin' good why can't you respect crispy?"'''
+def run_huffman():
+    huff_text = '''I identify as a KFC bucket. My pronouns are Crispy and Original. #Respectmypronouns 
+    If you need an example on how my gender studies professor identifies me, "Stop spewing your 
+    ignorance at crispy, Original has feelings that need to be accounted for. Crispy is finger 
+    lickin' good why can't you respect crispy?"'''
 
-# symb2freq = defaultdict(int)
-symb2freq = Counter(huff_text)
-for char in huff_text:
-    symb2freq[char] += 1
-huff = huff_encode(symb2freq)
-print("Symbol\tWeight\tHuffman Code")
-for p in huff:
-    print('{}\t{}\t{}'.format(p[0], symb2freq[p[0]], p[1]))
+    # symb2freq = defaultdict(int)
+    symb2freq = Counter(huff_text)
+    for char in huff_text:
+        symb2freq[char] += 1
+    huff = huff_encode(symb2freq)
+    print("Symbol\tWeight\tHuffman Code")
+    for p in huff:
+        print('{}\t{}\t{}'.format(p[0], symb2freq[p[0]], p[1]))
